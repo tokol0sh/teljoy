@@ -2,6 +2,7 @@
 .project
 .idea
 
+teljoy_env
 *.pyc
 *~
 
