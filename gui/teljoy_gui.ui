@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>973</width>
+    <height>828</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Teljoy</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="coordinate_box">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>761</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Telescope Position</string>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>741</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="groupBox_6">
+        <property name="title">
+         <string>Hour Angle</string>
+        </property>
+        <widget class="QWidget" name="gridLayoutWidget_7">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>30</y>
+           <width>211</width>
+           <height>36</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>Seconds</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Hours</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Minutes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="ha_hours">
+            <property name="text">
+             <string>DD</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="ha_minutes">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="ha_seconds">
+            <property name="text">
+             <string>ss</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>Declination</string>
+        </property>
+        <widget class="QWidget" name="gridLayoutWidget_3">
+         <property name="geometry">
+          <rect>
+           <x>12</x>
+           <y>30</y>
+           <width>211</width>
+           <height>36</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Seconds</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Degrees</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Minutes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="dec_degrees">
+            <property name="text">
+             <string>DD</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="dec_minutes">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="dec_seconds">
+            <property name="text">
+             <string>ss</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="title">
+         <string>Azimuth</string>
+        </property>
+        <widget class="QWidget" name="gridLayoutWidget_5">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>211</width>
+           <height>36</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Seconds</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Degrees</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Minutes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="az_degrees">
+            <property name="text">
+             <string>DD</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="az_minutes">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="az_seconds">
+            <property name="text">
+             <string>ss</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QGroupBox" name="groupBox_5">
+        <property name="title">
+         <string>Elevation</string>
+        </property>
+        <widget class="QWidget" name="gridLayoutWidget_6">
+         <property name="geometry">
+          <rect>
+           <x>12</x>
+           <y>30</y>
+           <width>211</width>
+           <height>36</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Seconds</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Degrees</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Minutes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="el_degrees">
+            <property name="text">
+             <string>DD</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="el_minutes">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="el_seconds">
+            <property name="text">
+             <string>ss</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>Right Ascension</string>
+        </property>
+        <widget class="QWidget" name="gridLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>30</y>
+           <width>211</width>
+           <height>36</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Seconds</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Hours</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Minutes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="ra_hours">
+            <property name="text">
+             <string>HH</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="ra_minutes">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="ra_seconds">
+            <property name="text">
+             <string>ss</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>20</y>
+      <width>121</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Time</string>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>19</y>
+       <width>101</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="QGroupBox" name="groupBox_7">
+        <property name="title">
+         <string>UTC</string>
+        </property>
+        <widget class="QLabel" name="UTC">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>7</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>HH:MM:SS.ss</string>
+         </property>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="groupBox_8">
+        <property name="title">
+         <string>LST</string>
+        </property>
+        <widget class="QLabel" name="LST">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>71</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>HH:MM:SS.ss</string>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_14">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>401</width>
+      <height>231</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Dome Control</string>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget_14">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>217</width>
+       <height>96</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_14">
+      <item row="3" column="1">
+       <widget class="QLabel" name="dome_status">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_47">
+        <property name="text">
+         <string>Dome status:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_41">
+        <property name="text">
+         <string>Current dome position:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="current_dome_position">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="commanded_dome_position">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_50">
+        <property name="text">
+         <string>Shutter status:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_42">
+        <property name="text">
+         <string>Commanded dome position:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="dome__shutter_status">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="dome_enable_auto_tracking">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>200</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enable auto tracking</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dome_drive_left">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>160</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Drive Left</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dome_stop">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>160</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>STOP</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>false</bool>
+     </property>
+     <property name="autoRepeatDelay">
+      <number>200</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dome_drive_right">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>160</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Drive Right</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dome_goto_position">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>70</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Goto position</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="dome_manul_goto_position">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>40</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_43">
+     <property name="geometry">
+      <rect>
+       <x>278</x>
+       <y>20</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Manual GoTo</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_15">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>460</y>
+      <width>401</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Focus Control</string>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget_15">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>201</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_15">
+      <item row="2" column="1">
+       <widget class="QLabel" name="commanded_focus_position">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="current_focus_position">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_45">
+        <property name="text">
+         <string>Current foucs position:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_44">
+        <property name="text">
+         <string>Commanded focus position:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_48">
+        <property name="text">
+         <string>Focuser status</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="focus_status">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="focus_drive_left">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>160</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Focus Down</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="focus_stop">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>160</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>STOP</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>false</bool>
+     </property>
+     <property name="autoRepeatDelay">
+      <number>200</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="focus_drive_right">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>160</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Focus Up</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="focus_goto_position">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>70</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Goto position</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="focus_manul_goto_position">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>40</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_46">
+     <property name="geometry">
+      <rect>
+       <x>278</x>
+       <y>20</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Manual GoTo</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_16">
+    <property name="geometry">
+     <rect>
+      <x>427</x>
+      <y>221</y>
+      <width>191</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Mirror Cover</string>
+    </property>
+    <widget class="QPushButton" name="mirror_cover_open">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="mirror_cover_close">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Close</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>false</bool>
+     </property>
+     <property name="autoRepeatDelay">
+      <number>200</number>
+     </property>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>160</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_51">
+        <property name="text">
+         <string>Mirror cover status:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="mirror_cover_status">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_17">
+    <property name="geometry">
+     <rect>
+      <x>427</x>
+      <y>350</y>
+      <width>191</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Dome Lights</string>
+    </property>
+    <widget class="QPushButton" name="Dome_lights_on">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>On</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dome_lighs_off">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Off</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>false</bool>
+     </property>
+     <property name="autoRepeatDelay">
+      <number>200</number>
+     </property>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_9">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_52">
+        <property name="text">
+         <string>Dome lights status:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="dome_lights_status">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_9">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>230</y>
+      <width>281</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Telescope Control</string>
+    </property>
+    <widget class="QGroupBox" name="groupBox_10">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>20</y>
+       <width>71</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Speed</string>
+     </property>
+     <widget class="QWidget" name="formLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>51</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QRadioButton" name="telescope_guide_speed">
+         <property name="text">
+          <string>Guide</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QRadioButton" name="telescope_slew_speed">
+         <property name="text">
+          <string>Slew</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QRadioButton" name="telescope_set_speed">
+         <property name="text">
+          <string>Set</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>161</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_11">
+      <item row="2" column="1">
+       <widget class="QPushButton" name="telescope_south">
+        <property name="text">
+         <string>S</string>
+        </property>
+        <property name="autoRepeat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="telescope_north">
+        <property name="text">
+         <string>N</string>
+        </property>
+        <property name="autoRepeat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="telescope_east">
+        <property name="text">
+         <string>E</string>
+        </property>
+        <property name="autoRepeat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="telescope_west">
+        <property name="text">
+         <string>W</string>
+        </property>
+        <property name="autoRepeat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>261</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GoTo Controls</string>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_12">
+      <property name="geometry">
+       <rect>
+        <x>5</x>
+        <y>20</y>
+        <width>251</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_12">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>Target name or coordinates</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="telescope_goto_target_id"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>60</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GoTo target</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>973</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

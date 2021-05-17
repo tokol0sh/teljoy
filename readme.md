@@ -6,15 +6,15 @@ A telescope control program for Perth Observatory and Mt John Observatory
     So in cmd or bash "pip install virtualenv"
 
     Navigate to your project directory and do:
-    "virtualenv AO_env"
+    "virtualenv teljoy_env"
 
     Then: 
-    Linux: " source /AO_env/Scripts/activate"
-    Win: AO_env\Scripts\activate"
+    Linux: " source /teljoy_env/Scripts/activate"
+    Win: teljoy_env\Scripts\activate"
 
     To install all the packages, do:
     "pip install -r requirements.txt"
-    
+
     To deactivate the virtual environment and return to you system default:
     "deactivate"
 

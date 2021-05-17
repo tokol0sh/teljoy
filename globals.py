@@ -16,8 +16,8 @@ if sys.version_info.major == 2:
 else:
     from configparser import ConfigParser as conparser
 
-SITE = 'PERTH'
-# SITE = 'NZ'
+# SITE = 'PERTH'
+SITE = 'NZ'
 
 INIF = 'teljoy.ini'
 

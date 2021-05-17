@@ -12,13 +12,13 @@
 """
 
 # Uncomment the appropriate definition:
-# SITE = 'NZ'
-SITE = 'PERTH'
+SITE = 'NZ'
+# SITE = 'PERTH'
 
 DEFPORT = 9696
 
 if SITE == 'NZ':
-    DEFHOST = 'cynosure.canterbury.ac.nz'
+    DEFHOST = '10.32.76.37' #'cynosure.canterbury.ac.nz'
     DEFURL = 'PYRO:Teljoy@%s:%d' % (DEFHOST, DEFPORT)
     KEYFILE = '~mjuo/teljoy.pyrokey'
 elif SITE == 'PERTH':
