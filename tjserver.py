@@ -258,6 +258,12 @@ class Telescope(object):
     def send_stop_dome_manual_move(self):
         dome.dome.send_stop_dome_manual_move()
 
+    @Pyro4.expose
+    def send_dome_goto_pos(self, pos):
+        dome.dome.send_dome_goto_pos(pos)
+
+
+
 def InitServer():
     global plat, pyro_thread
     plat = Telescope()

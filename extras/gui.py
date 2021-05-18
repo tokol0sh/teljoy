@@ -44,6 +44,8 @@ class Ui(QtWidgets.QMainWindow):
         self.telescope_south.pressed.connect(self.send_telescope_south)
         self.telescope_east.pressed.connect(self.send_telescope_east)
         self.telescope_west.pressed.connect(self.send_telescope_west)
+
+        self.goto_target.pressed.connect(self.jump_target)
         self.show()
 
     def update_status(self):
@@ -139,8 +141,13 @@ class Ui(QtWidgets.QMainWindow):
 
     def dome_goto_pos(self):
         pos = int(self.dome_manul_goto_position.text())
-        self.handpaddle.send_dome_goto_pos(pos)
+        self.teljoy_status.proxy.send_dome_goto_pos(pos)
         self.commanded_dome_position.setText("%3d" % pos)
+
+    def jump_target(self):
+        target = self.telescope_goto_target_id.text()
+        tjclient.jump(target)
+
 
         
 
