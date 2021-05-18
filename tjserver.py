@@ -230,6 +230,33 @@ class Telescope(object):
         else:
             return "ERROR: Unknown argument: specify an azimuth in degrees, or 'open', or 'close'"
 
+    @Pyro4.expose
+    def press_virtual_north(self):
+        detevent.vpaddles.VirtualButtons["North"] = True
+
+    @Pyro4.expose
+    def press_virtual_south(self):
+        detevent.vpaddles.VirtualButtons["South"] = True
+
+    @Pyro4.expose
+    def press_virtual_east(self):
+        detevent.vpaddles.VirtualButtons["East"] = True
+
+    @Pyro4.expose
+    def press_virtual_west(self):
+        detevent.vpaddles.VirtualButtons["West"] = True
+    
+    @Pyro4.expose
+    def send_dome_manual_left(self):
+        dome.dome.send_dome_manual_left()
+
+    @Pyro4.expose
+    def send_dome_manual_right(self):
+        dome.dome.send_dome_manual_right()
+
+    @Pyro4.expose
+    def send_stop_dome_manual_move(self):
+        dome.dome.send_stop_dome_manual_move()
 
 def InitServer():
     global plat, pyro_thread

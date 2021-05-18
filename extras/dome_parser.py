@@ -47,11 +47,12 @@ class HandPaddle:
         self.send_commands()
 
     def read_command(self):
-        data = self.ser.read_until(expected='*')
+        data = self.ser.read_until(expected=b'*').decode()
         commands = data.split('\r')
         commands.pop(-1) # get rid of the '*'
         for command in commands:
-            self.parser.process(command)
+            if command != '':
+                self.parser.process(command)
         print("\n\n")
 
 
@@ -65,7 +66,7 @@ class HandPaddle:
         if DEBUG == True:
             print(string)
         else:
-            self.ser.write(string)
+            self.ser.write(string.encode())
             # if PRINT:
             #     print(string)
         self.command_buffer=[]

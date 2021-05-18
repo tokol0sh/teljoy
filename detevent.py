@@ -31,7 +31,7 @@ import correct
 import motion
 import posfile
 import sqlint
-from handpaddles import paddles
+from handpaddles import paddles, vpaddles
 
 TIMEOUT = 0  # Set to the number of seconds you want to wait without any contact via the tjbox table before closing down.
 # In NZ, nothing uses tjbox, so the timeout is set to zero (disabled).
@@ -807,6 +807,7 @@ def Init():
     fastloop.register('CheckLimitClear', CheckLimitClear)  # Test to see if the hardware limits are clear now, and if safe, clear the global limit flag
     fastloop.register('CheckTJbox', CheckTJbox)  # Look for a new database record in the command table for automatic control events
     fastloop.register('paddles.check', paddles.check)  # Check and act on changes to hand-paddle buttons and switch state.
+    fastloop.register('vpaddles.check', vpaddles.check)         # Check and act on changes to virtual hand-paddle buttons and switch state.
 
     slowloop = EventLoop(name='SlowLoop', looptime=SLOWLOOP)
     if SITE == 'PERTH':

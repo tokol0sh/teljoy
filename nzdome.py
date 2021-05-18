@@ -13,7 +13,15 @@ import serial
 import digio
 from globals import *
 
-DOMEPORT = '/dev/ttyUSB0'  # Serial port for dome encoder
+PRINT=False
+
+mirror_cover = ["mirror cover closed", "mirror cover opened", "mirror cover opening", "mirror cover closing", "mirror cover partly opened"]
+dome_drive = ["Dome stopped", "Dome arrived at GoTo position", "DomeDoingGoTo", "DoingDomeManualDriveRight", "DoingDomeManualDriveLeft", "DomeParked", "DomeEncoderNotInitialised", "DomeGoToWasCancelled"]
+shutter = ["Shutter fully closed", "Shutter fully open", "Shutter driving up without windshield", "Shutter driving up with windshield", "Shutter stopped part way up", "Shutter stopped part way down"]
+dome_encoder = ["Dome encoder not initialised", " Dome encoder initialised"]
+dome_lights = ["Dome lights on", "Dome lights off"]
+
+DOMEPORT = 'COM4'  # Serial port for dome encoder
 MAXDOMEMOVE = 180000  # Milliseconds of dome travel time before a dome-failure timeout occurs}
 DENCODEROFFSET = 27  # Add this many counts to the encoder value (range 0-255) before converting to azimuth
 # This value is the default, used if teljoy.ini is not found. The actual offset is taken
@@ -33,6 +41,7 @@ class Dome(object):
 
     def __init__(self):
         self.DomeAzi = -10  # Current dome azimuth
+        self.commandedDomeAzi = -10 # The commanded dome azimuth
         self.DomeInUse = False  # True if the dome is moving
         self.CommandSent = False  # True if the current command has been sent to the dome controller
         self.Command = None  # True if the dome movement has finished
@@ -45,6 +54,20 @@ class Dome(object):
         self.DomeLastTime = 0  # Last time the dome was moved. Used for DomeTracking to prevent frequent small moves
         self.EncoderOffset = CP.getint('Dome',
                                        'DomeEncoderOffset')  # How much to add to the raw encoder value before converting to degrees
+        
+        self.command_buffer = []
+        self.parser = command_parser(self)
+        self.mirror_cover_status = 0
+        self.dome_drive_status = 0
+        self.secondary_mirror = 0
+        self.focus_endspot_staus = 0
+        self.focus_absolute_position = 0
+        self.focus_relative_position = 0
+        self.shutter_status = 0
+        self.dome_encoder_status = 0
+        self.dome_lights_status = 0
+
+        
         self.queue = []
         try:
             self.ser = serial.Serial(DOMEPORT, baudrate=9600, stopbits=serial.STOPBITS_ONE, timeout=1.0, rtscts=False,
@@ -108,6 +131,8 @@ class Dome(object):
         """Should be called repeatedly (eg by detevent loop) to manage communication
            with the dome controller.
         """
+        self.read_command()
+        self.send_commands()
         if not self.AutoDome:
             return  # Don't do anything if we aren't in automatic mode
         if self.queue and not self.Command:  # If we aren't already processing a command, and there's one in the queue, do it now.
@@ -154,6 +179,75 @@ class Dome(object):
                             digio.DomeLeft()
                         else:
                             digio.DomeRight()
+
+    def read_command(self):
+            data = self.ser.read_until(expected=b'*').decode()
+            commands = data.split('\r')
+            commands.pop(-1) # get rid of the '*'
+            for command in commands:
+                if command != '':
+                    self.parser.process(command)
+
+    def send_commands(self):
+        string = ""
+        for command in self.command_buffer:
+            string += command
+            string += "\r"
+        string += "*"
+
+        if DEBUG == True:
+            print(string)
+        else:
+            self.ser.write(string.encode())
+            # if PRINT:
+            #     print(string)
+        self.command_buffer=[]
+
+    def send_RA(self):
+        self.command_buffer.append("A123456")
+
+    def send_DEC(self):
+        self.command_buffer.append("B+123456")
+
+    def send_HA(self):
+        self.command_buffer.append("C+123456")
+
+    def send_LST(self):
+        self.command_buffer.append("D123456")
+
+    
+    def send_dome_goto_pos(self, pos):
+        self.command_buffer.append("E%03d" % pos)
+        if PRINT:
+            print("E%3d" % pos)
+        # self.send_dome_enable_goto()
+
+    def send_dome_enable_goto(self):
+        self.command_buffer.append("F1")
+    
+    def send_stop_dome_goto(self):
+        self.command_buffer.append("F0")
+    
+    def send_dome_auto(self):
+        self.command_buffer.append("G1")
+
+    def send_dome_manual(self):
+        self.command_buffer.append("G0")
+    
+    def send_stop_dome_manual_move(self):
+        self.command_buffer.append("H0")
+        if PRINT:
+            print("Stop manual")
+    
+    def send_dome_manual_left(self):
+        self.command_buffer.append("H1")
+        if PRINT:
+            print("Left")
+    
+    def send_dome_manual_right(self):
+        self.command_buffer.append("H2")
+        if PRINT:
+            print("Right")
 
     def move(self, az=None, force=False):
         """Add a 'move' command to the dome command queue, to be executed as soon as the dome is free.
@@ -271,6 +365,85 @@ def RadToDeg(r):
     """Given an argument in radians, return the value converted to degrees.
     """
     return (r / math.pi) * 180
+
+
+
+
+class command_parser():
+    def __init__(self,obj):
+        self.dome = obj
+    def process(self, cmd):
+        if PRINT:
+            print("processing", cmd)
+        fn = 'function_' + cmd[0]
+
+        if hasattr(self, fn):
+            getattr(self, fn)(cmd[1:])
+        else:
+            print("invalid command: ", cmd)
+    
+    def function_a(self, arg):
+        print('North not implemented:', arg)
+
+    def function_b(self, arg):
+        print('South not implemented:', arg)
+
+    def function_c(self, arg):
+        print('East not implemented:', arg)
+    
+    def function_d(self, arg):
+        print('West not implemented:', arg)
+
+    def function_e(self, arg):
+        print('no drive not implemented:', arg)
+
+    def function_f(self, arg):
+        self.dome.mirror_cover_status = arg
+        if PRINT:
+            print("Mirror cover status received:", mirror_cover[self.dome.mirror_cover_status])
+
+    def function_g(self, arg):
+        self.dome.dome_drive_status = int(arg)
+        if PRINT:
+            print("Dome drive status: ", dome_drive[self.dome.dome_drive_status])
+        
+
+    def function_h(self, arg):
+        self.dome.DomeAzi = int(arg)
+        if PRINT:
+            print("Dome azimuth: %03d" % self.dome.DomeAzi)
+
+    def function_i(self, arg):
+        try:
+            focus_data = arg.split(',')
+            self.dome.secondary_mirror = focus_data[0]
+            self.dome.focus_endspot_staus = focus_data[1]
+            self.deom.focus_absolute_position = focus_data[2]
+            self.deom.focus_relative_position = focus_data[3]
+        except:
+            print("error parsing focus command")
+
+    def function_j(self, arg):
+        try:
+            self.dome.shutter_status = int(arg)
+        except:
+            print("error parsing j command")
+
+        if PRINT:
+            print("Shutter status: ", shutter[self.dome.shutter_status])
+
+    def function_k(self, arg):
+        self.dome.dome_encoder_status = int(arg)
+        if PRINT:
+            print("Dome encoder status: ", dome_encoder[self.dome.dome_encoder_status])
+
+    def function_l(self, arg):
+        self.dome.dome_lights_status = int(arg)
+        if PRINT:
+            print("Dome lights status : ", dome_lights[self.dome.dome_lights_status])
+
+
+
 
 
 dome = Dome()

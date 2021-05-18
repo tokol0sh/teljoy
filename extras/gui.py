@@ -5,7 +5,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui, uic
 from PyQt5.QtCore import QTimer
 import sys
 import tjclient
-import dome_parser
+# import dome_parser
 import datetime
 
 version = sys.version_info
@@ -29,11 +29,6 @@ class Ui(QtWidgets.QMainWindow):
         self.teljoy_status_timer.timeout.connect(self.update_status)
         self.teljoy_status_timer.start(300)
 
-        if DEBUG:
-            self.handpaddle = dome_parser.HandPaddle()
-            self.command_timer = QTimer()
-            self.command_timer.timeout.connect(self.handpaddle.update)
-            self.command_timer.start(100)
 
         # self.dome_drive_left.setAutoRepeat(True)
         self.dome_drive_left.pressed.connect(self.send_dome_left)
@@ -43,7 +38,7 @@ class Ui(QtWidgets.QMainWindow):
         self.dome_drive_right.released.connect(self.send_dome_stop)
 
         self.dome_goto_position.clicked.connect(self.dome_goto_pos)
-        self.dome_stop.clicked.connect(self.handpaddle.send_stop_dome_goto)
+        # self.dome_stop.clicked.connect(self.handpaddle.send_stop_dome_goto)
         
         self.telescope_north.pressed.connect(self.send_telescope_north)
         self.telescope_south.pressed.connect(self.send_telescope_south)
@@ -77,14 +72,14 @@ class Ui(QtWidgets.QMainWindow):
 
 
     def send_dome_right(self):
-        self.handpaddle.send_dome_manual_right()
+        self.teljoy_status.proxy.send_dome_manual_right()
 
     def send_dome_left(self):
-        self.handpaddle.send_dome_manual_left()
+        self.teljoy_status.proxy.send_dome_manual_left()
     
     def send_dome_stop(self):
         if not (self.dome_drive_right.isDown() or self.dome_drive_left.isDown()):
-            self.handpaddle.send_stop_dome_manual_move()
+            self.teljoy_status.proxy.send_stop_dome_manual_move()
 
 
     
@@ -140,7 +135,7 @@ class Ui(QtWidgets.QMainWindow):
         self.LST.setText("%02d:%02d:%.2f" % (LST_hours, LST_minutes, LST_seconds))
     
     def update_dome_azimuth(self):
-        self.current_dome_position.setText("%03d" % self.handpaddle.dome_azimuth)
+        self.current_dome_position.setText("%03d" % self.teljoy_status.dome.DomeAzi)
 
     def dome_goto_pos(self):
         pos = int(self.dome_manul_goto_position.text())
