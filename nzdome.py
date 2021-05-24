@@ -204,15 +204,23 @@ class Dome(object):
         self.command_buffer=[]
 
     def send_RA(self):
-        self.command_buffer.append("A123456")
+        command = 'A' + sexstring(self.Ra/15/3600,'', dp=0)
+        print(command)
+        self.command_buffer.append(command)
 
     def send_DEC(self):
-        self.command_buffer.append("B+123456")
+        command = 'B' + sexstring(self.Dec/3600,'', dp=0)
+        print(command)
+        self.command_buffer.append(command)
 
     def send_HA(self):
-        self.command_buffer.append("C+123456")
+        command = 'C' + sexstring(self.Ha,'', dp=0)
+        print(command)
+        self.command_buffer.append(command)
 
     def send_LST(self):
+        command = 'D' + sexstring(self.LST,'', dp=0)
+        print(command)
         self.command_buffer.append("D123456")
 
     
@@ -248,6 +256,18 @@ class Dome(object):
         self.command_buffer.append("H2")
         if PRINT:
             print("Right")
+
+    def update_handpaddle(self, Obj):
+        self.Ra = Obj.RaC
+        self.Dec = Obj.DecC
+        self.Ha = Obj.RaC / 15 / 3600 - Obj.Time.LST
+        self.LST = Obj.Time.LST
+
+        self.send_RA()
+        self.send_DEC()
+        self.send_HA()
+        self.send_LST()
+
 
     def move(self, az=None, force=False):
         """Add a 'move' command to the dome command queue, to be executed as soon as the dome is free.
@@ -297,6 +317,8 @@ class Dome(object):
             self.queue.append('I')  # Check shutter status after the close command
         else:
             logger.error('System stopped, no dome activity until safety tags cleared.')
+
+    
 
     def CalcAzi(self, Obj):
         """Calculates the dome azimuth for a given telescope position, passed as a

@@ -146,7 +146,7 @@ class Ui(QtWidgets.QMainWindow):
 
     def jump_target(self):
         target = self.telescope_goto_target_id.text()
-        tjclient.jump(target)
+        self.tj_text.append(tjclient.jump(target))
 
 
         

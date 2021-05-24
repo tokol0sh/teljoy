@@ -537,6 +537,9 @@ def CheckDirtyDome():
             not errors.CalError):
         dome.dome.move(dome.dome.CalcAzi(current))
 
+def updateDomeHandpaddle():
+    dome.dome.update_handpaddle(current)
+
 
 def CheckDBUpdate():
     """Make sure that the current state is saved to the SQL database approximately once
@@ -808,7 +811,8 @@ def Init():
     fastloop.register('CheckTJbox', CheckTJbox)  # Look for a new database record in the command table for automatic control events
     fastloop.register('paddles.check', paddles.check)  # Check and act on changes to hand-paddle buttons and switch state.
     fastloop.register('vpaddles.check', vpaddles.check)         # Check and act on changes to virtual hand-paddle buttons and switch state.
-
+    fastloop.register('updateDomeHandpaddle', updateDomeHandpaddle) # Updates RA, DEC, HA and LST to send to the new handpaddle
+    
     slowloop = EventLoop(name='SlowLoop', looptime=SLOWLOOP)
     if SITE == 'PERTH':
         # noinspection PyProtectedMember

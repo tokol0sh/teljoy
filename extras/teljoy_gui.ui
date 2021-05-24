@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>973</width>
-    <height>828</height>
+    <height>824</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -993,7 +993,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>239</width>
+       <width>171</width>
        <height>141</height>
       </rect>
      </property>
@@ -1088,6 +1088,19 @@
       </property>
      </widget>
     </widget>
+   </widget>
+   <widget class="QTextEdit" name="tj_text">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>560</y>
+      <width>481</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
