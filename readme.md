@@ -1,5 +1,5 @@
-# AO with Python TCS
-A telescope control program for Perth Observatory and Mt John Observatory
+# Python TCS
+Telescope control software for 61cm telescopes at Perth Observatory and Mt John University Observatory
 
 # Create a virtual environment and use the requirements.txt:
     Python install needs virtualenv
