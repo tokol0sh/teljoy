@@ -247,6 +247,14 @@ class Telescope(object):
         detevent.vpaddles.VirtualButtons["West"] = True
     
     @Pyro4.expose
+    def get_virtual_buttons_status(self):
+        return detevent.vpaddles.VirtualButtons
+
+    @Pyro4.expose
+    def set_virtual_buttons_speed(self, speed):
+        detevent.vpaddles.CoarseMode = speed
+    
+    @Pyro4.expose
     def send_dome_manual_left(self):
         dome.dome.send_dome_manual_left()
 
@@ -262,8 +270,49 @@ class Telescope(object):
     def send_dome_goto_pos(self, pos):
         dome.dome.send_dome_goto_pos(pos)
 
+    @Pyro4.expose
+    def send_focus_goto_pos(self, pos):
+        dome.dome.send_focus_goto_pos(pos)
+
+    @Pyro4.expose
+    def send_focus_manual_in(self):
+        dome.dome.send_focus_manual_in()
+
+    @Pyro4.expose
+    def send_focus_manual_out(self):
+        dome.dome.send_focus_manual_out()
+
+    @Pyro4.expose
+    def send_focus_manual_stop(self):
+        dome.dome.send_focus_manual_stop()
+
+    @Pyro4.expose
+    def send_dome_lights_on(self):
+        dome.dome.send_dome_lights_on()
+
+    @Pyro4.expose
+    def send_dome_lights_off(self):
+        dome.dome.send_dome_lights_off()
+
+    @Pyro4.expose
+    def send_shutter_open_with_windshield(self):
+        dome.dome.send_shutter_open_with_windshield()
+
+    @Pyro4.expose
+    def send_shutter_open_without_windshield(self):
+        dome.dome.send_shutter_open_without_windshield()
+    
+    @Pyro4.expose
+    def send_shutter_close(self):
+        dome.dome.send_shutter_close()
+
+    @Pyro4.expose
+    def send_shutter_stop(self):
+        dome.dome.send_shutter_stop()
 
 
+
+  
 def InitServer():
     global plat, pyro_thread
     plat = Telescope()

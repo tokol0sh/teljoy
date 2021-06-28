@@ -31,7 +31,7 @@ import correct
 import motion
 import posfile
 import sqlint
-from handpaddles import paddles, vpaddles
+from handpaddles import VirtualPaddles, paddles, vpaddles
 
 TIMEOUT = 0  # Set to the number of seconds you want to wait without any contact via the tjbox table before closing down.
 # In NZ, nothing uses tjbox, so the timeout is set to zero (disabled).
@@ -538,7 +538,18 @@ def CheckDirtyDome():
         dome.dome.move(dome.dome.CalcAzi(current))
 
 def updateDomeHandpaddle():
+    if dome.dome.VirtualButtons["North"] or dome.dome.VirtualButtons["South"] or dome.dome.VirtualButtons["East"] or dome.dome.VirtualButtons["West"]:
+        vpaddles.CoarseMode = dome.dome.slew_speed
     dome.dome.update_handpaddle(current)
+    vpaddles.VirtualButtons["North"] = vpaddles.VirtualButtons["North"] or dome.dome.VirtualButtons["North"]
+    vpaddles.VirtualButtons["South"] = vpaddles.VirtualButtons["South"] or dome.dome.VirtualButtons["South"]
+    vpaddles.VirtualButtons["East"] = vpaddles.VirtualButtons["East"] or dome.dome.VirtualButtons["East"]
+    vpaddles.VirtualButtons["West"] = vpaddles.VirtualButtons["West"] or dome.dome.VirtualButtons["West"]
+
+    if not(dome.dome.VirtualButtons["North"] and dome.dome.VirtualButtons["South"] and dome.dome.VirtualButtons["East"] and dome.dome.VirtualButtons["West"]):
+        vpaddles.VirtualButtons = dome.dome.VirtualButtons
+    
+
 
 
 def CheckDBUpdate():

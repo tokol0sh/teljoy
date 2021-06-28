@@ -186,7 +186,7 @@ class VirtualPaddles(object):
         self.DEC_GuideAcc = 0.0
         self.ButtonPressedRA = False   # True if one of the RA direction buttons is pressed
         self.ButtonPressedDEC = False  # True if one of the DEC direction buttons is pressed
-        self.CoarseMode = 'CSet'       # one of 'CSet' or 'CSlew' or 'CGuide', depending on 'Coarse' paddle speed toggle switch
+        self.CoarseMode = 'CSlew'       # one of 'CSet' or 'CSlew' or 'CGuide', depending on 'Coarse' paddle speed toggle switch
         self.RAdir = ''                # one of 'fineEast',  'fineWest',  'CoarseEast', or  'CoarseWest'
         self.DECdir = ''               # one of 'fineNorth', 'fineSouth', 'CoarseNorth', or 'CoarseSouth'
         self.VirtualButtons = {"North":False, "South":False, "East":False, "West":False}
@@ -238,6 +238,7 @@ class VirtualPaddles(object):
             CoarsePaddleRate = prefs.GuideRate
         elif self.CoarseMode == 'CSet':
             CoarsePaddleRate = prefs.CoarseSetRate
+        print(self.CoarseMode)
 
 
 
@@ -250,6 +251,7 @@ class VirtualPaddles(object):
                 Paddle_max_vel = CoarsePaddleRate
                 motion.motors.DEC.StartPaddle(Paddle_max_vel)
                 print("Virtual North pressed")
+                
         elif self.ButtonPressedDEC and (self.DECdir == 'coarseNorth'):
             #Mask does not match but the motor is running
             self.ButtonPressedDEC = False

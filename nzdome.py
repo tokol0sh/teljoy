@@ -16,12 +16,14 @@ from globals import *
 PRINT=False
 
 mirror_cover = ["mirror cover closed", "mirror cover opened", "mirror cover opening", "mirror cover closing", "mirror cover partly opened"]
-dome_drive = ["Dome stopped", "Dome arrived at GoTo position", "DomeDoingGoTo", "DoingDomeManualDriveRight", "DoingDomeManualDriveLeft", "DomeParked", "DomeEncoderNotInitialised", "DomeGoToWasCancelled"]
+dome_drive_messages = ["Dome stopped", "Arrived at goto position", "Going To", "Driving right", "Driving left", "Dome parked", "Encoder not initialised", "Goto cancelled"]
 shutter = ["Shutter fully closed", "Shutter fully open", "Shutter driving up without windshield", "Shutter driving up with windshield", "Shutter stopped part way up", "Shutter stopped part way down"]
 dome_encoder = ["Dome encoder not initialised", " Dome encoder initialised"]
 dome_lights = ["Dome lights on", "Dome lights off"]
+slew_speeds = ["", "CGuide", "CSet", "CSlew"]
 
-DOMEPORT = 'COM4'  # Serial port for dome encoder
+
+DOMEPORT = 'COM5'  # Serial port for dome encoder
 MAXDOMEMOVE = 180000  # Milliseconds of dome travel time before a dome-failure timeout occurs}
 DENCODEROFFSET = 27  # Add this many counts to the encoder value (range 0-255) before converting to azimuth
 # This value is the default, used if teljoy.ini is not found. The actual offset is taken
@@ -57,15 +59,17 @@ class Dome(object):
         
         self.command_buffer = []
         self.parser = command_parser(self)
-        self.mirror_cover_status = 0
-        self.dome_drive_status = 0
+        self.mirror_cover_status = ''
+        self.dome_drive_status = ''
         self.secondary_mirror = 0
         self.focus_endspot_staus = 0
         self.focus_absolute_position = 0
         self.focus_relative_position = 0
         self.shutter_status = 0
-        self.dome_encoder_status = 0
-        self.dome_lights_status = 0
+        self.dome_encoder_status = ''
+        self.dome_lights_status = ''
+        self.VirtualButtons = {"North":False, "South":False, "East":False, "West":False}
+        self.slew_speed = "CSet"
 
         
         self.queue = []
@@ -82,7 +86,7 @@ class Dome(object):
         """
         d = {}
         for n in ['DomeAzi', 'DomeInUse', 'CommandSent', 'Command', 'IsShutterOpen', 'DomeFailed', 'AutoDome',
-                  'DomeTracking', 'DomeLastTime', 'queue']:
+                  'DomeTracking', 'DomeLastTime', 'queue', 'focus_absolute_position', 'secondary_mirror', 'focus_endstop_status', 'dome_drive_status', 'mirror_cover_status', 'dome_lights_status']:
             d[n] = self.__dict__[n]
         return d
 
@@ -204,24 +208,29 @@ class Dome(object):
         self.command_buffer=[]
 
     def send_RA(self):
-        command = 'A' + sexstring(self.Ra/15/3600,'', dp=0)
-        print(command)
+        command = 'A' + sexstring(self.Ra/15/3600,':', dp=0)
+        if PRINT:
+            print(command)
         self.command_buffer.append(command)
 
     def send_DEC(self):
-        command = 'B' + sexstring(self.Dec/3600,'', dp=0)
-        print(command)
+        command = 'B' + sexstring(self.Dec/3600,':', dp=0)
+        if PRINT:
+            print(command)
         self.command_buffer.append(command)
 
     def send_HA(self):
-        command = 'C' + sexstring(self.Ha,'', dp=0)
-        print(command)
+        command = 'C' + sexstring(self.Ha,':', dp=0)
+        if PRINT:
+            print(command)
         self.command_buffer.append(command)
 
     def send_LST(self):
-        command = 'D' + sexstring(self.LST,'', dp=0)
+        command = 'D' + sexstring(self.LST,':', dp=0)
         print(command)
-        self.command_buffer.append("D123456")
+        if PRINT:
+            print(command)
+        self.command_buffer.append(command)
 
     
     def send_dome_goto_pos(self, pos):
@@ -257,6 +266,61 @@ class Dome(object):
         if PRINT:
             print("Right")
 
+    def send_focus_goto_pos(self, pos):
+        self.command_buffer.append("I%03d" % pos)
+        if PRINT:
+            print("I%3d" % pos)
+
+    def send_focus_manual_in(self):
+        self.command_buffer.append("K1")
+        if PRINT:
+            print("FOCUS IN")
+
+    def send_focus_manual_out(self):
+        self.command_buffer.append("K2")
+        if PRINT:
+            print("FOCUS OUT")
+
+    def send_focus_manual_stop(self):
+        self.command_buffer.append("K0")
+        if PRINT:
+            print("FOCUS STOP")
+
+    def send_dome_lights_on(self):
+        self.command_buffer.append("O1")
+        if PRINT:
+            print("LIGHTS ON")
+
+    def send_dome_lights_off(self):
+        self.command_buffer.append("O0")
+        if PRINT:
+            print("LIGHTS OFF")
+
+    def send_shutter_open_without_windshield(self):
+            self.command_buffer.append("L1")
+            if PRINT:
+                print("SHUTTER OPEN WITHOUT SHIELD")
+
+    def send_shutter_open_with_windshield(self):
+        self.command_buffer.append("L2")
+        if PRINT:
+            print("SHUTTER OPEN WITH SHIELD")
+
+    def send_shutter_close(self):
+        self.command_buffer.append("L3")
+        if PRINT:
+            print("SHUTTER CLOSE")
+
+    def send_shutter_stop(self):
+        self.command_buffer.append("L0")
+        if PRINT:
+            print("SHUTTER STOP")
+    
+    
+
+
+
+
     def update_handpaddle(self, Obj):
         self.Ra = Obj.RaC
         self.Dec = Obj.DecC
@@ -267,6 +331,7 @@ class Dome(object):
         self.send_DEC()
         self.send_HA()
         self.send_LST()
+
 
 
     def move(self, az=None, force=False):
@@ -405,29 +470,51 @@ class command_parser():
             print("invalid command: ", cmd)
     
     def function_a(self, arg):
-        print('North not implemented:', arg)
+        # print('North not implemented:', arg)
+        self.dome.slew_speed = slew_speeds[int(arg)]
+        self.dome.VirtualButtons["North"] = True
+        self.dome.VirtualButtons["South"] = False
+        
+
 
     def function_b(self, arg):
-        print('South not implemented:', arg)
+        # print('South not implemented:', arg)
+        self.dome.slew_speed = slew_speeds[int(arg)]
+        self.dome.VirtualButtons["South"] = True
+        self.dome.VirtualButtons["North"] = False
+        
 
     def function_c(self, arg):
-        print('East not implemented:', arg)
-    
+        # print('East not implemented:', arg)
+        self.dome.slew_speed = slew_speeds[int(arg)]
+        self.dome.VirtualButtons["East"] = True
+        self.dome.VirtualButtons["West"] = False
+        
+
     def function_d(self, arg):
-        print('West not implemented:', arg)
+        # print('West not implemented:', arg)
+        self.dome.slew_speed = slew_speeds[int(arg)]
+        self.dome.VirtualButtons["West"] = True
+        self.dome.VirtualButtons["East"] = False
+        
 
     def function_e(self, arg):
-        print('no drive not implemented:', arg)
+        # print('no drive not implemented:', arg)
+        # print("Speed: %d" % int(arg))
+        self.dome.VirtualButtons = {"North":False, "South":False, "East":False, "West":False}
 
     def function_f(self, arg):
-        self.dome.mirror_cover_status = arg
-        if PRINT:
-            print("Mirror cover status received:", mirror_cover[self.dome.mirror_cover_status])
+        try:
+            self.dome.mirror_cover_status = mirror_cover[int(arg)]
+        except:
+            print("Error parsing mirror cover status: " + arg)
+        # if PRINT:
+            # print("Mirror cover status received:", mirror_cover[self.dome.mirror_cover_status])
 
     def function_g(self, arg):
-        self.dome.dome_drive_status = int(arg)
+        self.dome.dome_drive_status = dome_drive_messages[int(arg)]
         if PRINT:
-            print("Dome drive status: ", dome_drive[self.dome.dome_drive_status])
+            print("Dome drive status: ", self.dome.dome_drive_status)
         
 
     def function_h(self, arg):
@@ -436,12 +523,13 @@ class command_parser():
             print("Dome azimuth: %03d" % self.dome.DomeAzi)
 
     def function_i(self, arg):
+        print(arg)
         try:
             focus_data = arg.split(',')
             self.dome.secondary_mirror = focus_data[0]
-            self.dome.focus_endspot_staus = focus_data[1]
-            self.deom.focus_absolute_position = focus_data[2]
-            self.deom.focus_relative_position = focus_data[3]
+            self.dome.focus_endstop_status = focus_data[1]
+            self.dome.focus_absolute_position = focus_data[2]
+            self.dome.focus_relative_position = focus_data[3]
         except:
             print("error parsing focus command")
 
@@ -460,7 +548,7 @@ class command_parser():
             print("Dome encoder status: ", dome_encoder[self.dome.dome_encoder_status])
 
     def function_l(self, arg):
-        self.dome.dome_lights_status = int(arg)
+        self.dome.dome_lights_status = dome_lights[int(arg)]
         if PRINT:
             print("Dome lights status : ", dome_lights[self.dome.dome_lights_status])
 
