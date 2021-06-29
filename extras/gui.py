@@ -41,7 +41,8 @@ class Ui(QtWidgets.QMainWindow):
 
         self.dome_goto_position.clicked.connect(self.dome_goto_pos)
         self.focus_goto_position.clicked.connect(self.focus_goto_pos)
-        # self.dome_stop.clicked.connect(self.handpaddle.send_stop_dome_goto)
+        self.dome_stop.clicked.connect(self.send_stop_dome_goto)
+        self.focus_stop.clicked.connect(self.send_stop_focus_goto)
         
         self.telescope_north.pressed.connect(self.send_telescope_north)
         self.telescope_south.pressed.connect(self.send_telescope_south)
@@ -63,8 +64,13 @@ class Ui(QtWidgets.QMainWindow):
         self.Dome_lights_on.pressed.connect(self.dome_lights_on)
         self.Dome_lights_off.pressed.connect(self.dome_lights_off)
 
-        self.shutter_open.pressed.connect(self.send_shutter_open)
+        self.shutter_open_with_windshield.pressed.connect(self.send_shutter_open_with_windshield)
+        self.shutter_open_without_windshield.pressed.connect(self.send_shutter_open_without_windshield)
         self.shutter_close.pressed.connect(self.send_shutter_close)
+        self.shutter_stop.pressed.connect(self.send_shutter_stop)
+
+        self.mirror_cover_open.pressed.connect(self.send_mirror_cover_open)
+        self.mirror_cover_close.pressed.connect(self.send_mirror_cover_close)
 
         self.show()
 
@@ -77,11 +83,14 @@ class Ui(QtWidgets.QMainWindow):
         self.update_AZ()
         self.update_EL()
         self.update_time()
-        self.update_dome_azimuth()
+        self.update_dome()
         self.update_focus()
+        self.update_mirror_cover()
+        self.update_lights()
+        self.update_shutter()
 
-        self.mirror_cover_status.setText(self.teljoy_status.dome.mirror_cover_status)
-        self.dome_lights_status.setText(self.teljoy_status.dome.dome_lights_status)
+        
+        
 
         self.virtual_buttons = self.teljoy_status.proxy.get_virtual_buttons_status()
         if self.virtual_buttons["North"]:
@@ -134,6 +143,13 @@ class Ui(QtWidgets.QMainWindow):
         if not (self.focus_drive_right.isDown() or self.focus_drive_left.isDown()):
             self.teljoy_status.proxy.send_stop_dome_manual_move()
 
+    def send_stop_dome_goto(self):
+        self.teljoy_status.proxy.send_stop_dome_goto()
+
+    def send_stop_focus_goto(self):
+        self.teljoy_status.proxy.send_stop_focus_goto()
+
+
     def send_focus_in(self):
         self.teljoy_status.proxy.send_focus_manual_in()
     
@@ -143,6 +159,7 @@ class Ui(QtWidgets.QMainWindow):
     def send_focus_stop(self):
         if not (self.focus_drive_right.isDown() or self.focus_drive_left.isDown()):
             self.teljoy_status.proxy.send_focus_manual_stop()
+    
         
 
     
@@ -197,9 +214,18 @@ class Ui(QtWidgets.QMainWindow):
         self.UTC.setText("%02d:%02d:%02d" % (UT.hour, UT.minute, UT.second))
         self.LST.setText("%02d:%02d:%.2f" % (LST_hours, LST_minutes, LST_seconds))
     
-    def update_dome_azimuth(self):
+    def update_dome(self):
         self.current_dome_position.setText("%03d" % self.teljoy_status.dome.DomeAzi)
         self.dome_status.setText(self.teljoy_status.dome.dome_drive_status)
+
+    def update_mirror_cover(self):
+        self.mirror_cover_status.setText(self.teljoy_status.dome.mirror_cover_status)
+
+    def update_lights(self):
+        self.dome_lights_status.setText(self.teljoy_status.dome.dome_lights_status)
+
+    def update_shutter(self):
+        self.shutter_status.setText(self.teljoy_status.dome.shutter_status)
 
     def dome_goto_pos(self):
         pos = int(self.dome_manul_goto_position.text())
@@ -234,11 +260,23 @@ class Ui(QtWidgets.QMainWindow):
     def dome_lights_off(self):
         self.teljoy_status.proxy.send_dome_lights_off()
 
-    def send_shutter_open(self):
+    def send_shutter_open_without_windshield(self):
         self.teljoy_status.proxy.send_shutter_open_without_windshield()
+
+    def send_shutter_open_with_windshield(self):
+        self.teljoy_status.proxy.send_shutter_open_with_windshield()
 
     def send_shutter_close(self):
         self.teljoy_status.proxy.send_shutter_close()
+
+    def send_shutter_stop(self):
+        self.teljoy_status.proxy.send_shutter_stop()
+
+    def send_mirror_cover_open(self):
+        self.teljoy_status.proxy.send_mirror_cover_open()
+    
+    def send_mirror_cover_close(self):
+        self.teljoy_status.proxy.send_mirror_cover_close()
 
 
 

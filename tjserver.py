@@ -310,6 +310,23 @@ class Telescope(object):
     def send_shutter_stop(self):
         dome.dome.send_shutter_stop()
 
+    @Pyro4.expose
+    def send_mirror_cover_open(self):
+        dome.dome.send_mirror_cover_open()
+
+    @Pyro4.expose
+    def send_mirror_cover_close(self):
+        dome.dome.send_mirror_cover_close()
+
+    @Pyro4.expose
+    def send_stop_dome_goto(self):
+        dome.dome.send_stop_dome_goto()
+
+    @Pyro4.expose
+    def send_stop_focus_goto(self):
+        dome.dome.send_stop_focus_goto()
+
+
 
 
   

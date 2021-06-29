@@ -17,7 +17,7 @@ PRINT=False
 
 mirror_cover = ["mirror cover closed", "mirror cover opened", "mirror cover opening", "mirror cover closing", "mirror cover partly opened"]
 dome_drive_messages = ["Dome stopped", "Arrived at goto position", "Going To", "Driving right", "Driving left", "Dome parked", "Encoder not initialised", "Goto cancelled"]
-shutter = ["Shutter fully closed", "Shutter fully open", "Shutter driving up without windshield", "Shutter driving up with windshield", "Shutter stopped part way up", "Shutter stopped part way down"]
+shutter = ["Shutter closed", "Shutter opened", "Shutter driving up without windshield", "Shutter driving up with windshield", "Shutter stopped part way up", "Shutter stopped part way down"]
 dome_encoder = ["Dome encoder not initialised", " Dome encoder initialised"]
 dome_lights = ["Dome lights on", "Dome lights off"]
 slew_speeds = ["", "CGuide", "CSet", "CSlew"]
@@ -86,7 +86,7 @@ class Dome(object):
         """
         d = {}
         for n in ['DomeAzi', 'DomeInUse', 'CommandSent', 'Command', 'IsShutterOpen', 'DomeFailed', 'AutoDome',
-                  'DomeTracking', 'DomeLastTime', 'queue', 'focus_absolute_position', 'secondary_mirror', 'focus_endstop_status', 'dome_drive_status', 'mirror_cover_status', 'dome_lights_status']:
+                  'DomeTracking', 'DomeLastTime', 'queue', 'focus_absolute_position', 'secondary_mirror', 'focus_endstop_status', 'dome_drive_status', 'mirror_cover_status', 'dome_lights_status', 'shutter_status']:
             d[n] = self.__dict__[n]
         return d
 
@@ -276,6 +276,11 @@ class Dome(object):
         if PRINT:
             print("FOCUS IN")
 
+    def send_stop_focus_goto(self):
+        self.command_buffer.append("J0")
+        if PRINT:
+            print("FOCUS GOTO STOP")
+
     def send_focus_manual_out(self):
         self.command_buffer.append("K2")
         if PRINT:
@@ -315,6 +320,16 @@ class Dome(object):
         self.command_buffer.append("L0")
         if PRINT:
             print("SHUTTER STOP")
+
+    def send_mirror_cover_open(self):
+        self.command_buffer.append("P1")
+        if PRINT:
+            print("MIRROR COVER OPEN")
+    
+    def send_mirror_cover_close(self):
+        self.command_buffer.append("P2")
+        if PRINT:
+            print("MIRROR COVER CLOSE")
     
     
 
@@ -535,7 +550,7 @@ class command_parser():
 
     def function_j(self, arg):
         try:
-            self.dome.shutter_status = int(arg)
+            self.dome.shutter_status = shutter[int(self.dome.shutter_status)]
         except:
             print("error parsing j command")
 

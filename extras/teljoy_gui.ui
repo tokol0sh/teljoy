@@ -1107,7 +1107,7 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>610</y>
+      <y>650</y>
       <width>481</width>
       <height>141</height>
      </rect>
@@ -1122,23 +1122,23 @@
       <x>430</x>
       <y>470</y>
       <width>191</width>
-      <height>121</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
      <string>Shutter Control</string>
     </property>
-    <widget class="QPushButton" name="shutter_open">
+    <widget class="QPushButton" name="shutter_open_with_windshield">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>111</width>
+       <width>171</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
-      <string>Shutter open</string>
+      <string>Open shutter with windshield</string>
      </property>
      <property name="autoRepeat">
       <bool>true</bool>
@@ -1148,8 +1148,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
-       <width>111</width>
+       <y>80</y>
+       <width>171</width>
        <height>23</height>
       </rect>
      </property>
@@ -1167,7 +1167,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
+       <y>130</y>
        <width>171</width>
        <height>31</height>
       </rect>
@@ -1188,6 +1188,41 @@
        </widget>
       </item>
      </layout>
+    </widget>
+    <widget class="QPushButton" name="shutter_open_without_windshield">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>171</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open shutter without windshield</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="shutter_stop">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>171</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Shutter stop</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>false</bool>
+     </property>
+     <property name="autoRepeatDelay">
+      <number>200</number>
+     </property>
     </widget>
    </widget>
   </widget>
