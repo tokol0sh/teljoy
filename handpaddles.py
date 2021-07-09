@@ -238,7 +238,7 @@ class VirtualPaddles(object):
             CoarsePaddleRate = prefs.GuideRate
         elif self.CoarseMode == 'CSet':
             CoarsePaddleRate = prefs.CoarseSetRate
-        print(self.CoarseMode)
+        
 
 
 

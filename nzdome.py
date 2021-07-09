@@ -19,7 +19,7 @@ mirror_cover = ["mirror cover closed", "mirror cover opened", "mirror cover open
 dome_drive_messages = ["Dome stopped", "Arrived at goto position", "Going To", "Driving right", "Driving left", "Dome parked", "Encoder not initialised", "Goto cancelled"]
 shutter = ["Shutter closed", "Shutter opened", "Shutter driving up without windshield", "Shutter driving up with windshield", "Shutter stopped part way up", "Shutter stopped part way down"]
 dome_encoder = ["Dome encoder not initialised", " Dome encoder initialised"]
-dome_lights = ["Dome lights on", "Dome lights off"]
+dome_lights = ["Dome lights off", "Dome lights on"]
 slew_speeds = ["", "CGuide", "CSet", "CSlew"]
 
 
@@ -227,7 +227,6 @@ class Dome(object):
 
     def send_LST(self):
         command = 'D' + sexstring(self.LST,':', dp=0)
-        print(command)
         if PRINT:
             print(command)
         self.command_buffer.append(command)
@@ -368,7 +367,8 @@ class Dome(object):
             logger.error("nzdome.Dome.move: argument must be an integer between 0 and 359, not: %s" % az)
             return
         if safety.Active.is_set() or force:
-            self.queue.append(str(int(az)))
+            # self.queue.append(str(int(az)))
+            self.send_dome_goto_pos(int(az))
         else:
             logger.error('nzdome.Dome.move: no dome activity until safety tags cleared.')
 
@@ -393,8 +393,9 @@ class Dome(object):
             logger.error('nzdome.Dome.move: Dome not in auto mode.')
             return
         if safety.Active.is_set() or force:
-            self.queue.append('C')
-            self.queue.append('I')  # Check shutter status after the close command
+            # self.queue.append('C')
+            # self.queue.append('I')  # Check shutter status after the close command
+            self.send_shutter_close()
         else:
             logger.error('System stopped, no dome activity until safety tags cleared.')
 
@@ -538,7 +539,7 @@ class command_parser():
             print("Dome azimuth: %03d" % self.dome.DomeAzi)
 
     def function_i(self, arg):
-        print(arg)
+        # print(arg)
         try:
             focus_data = arg.split(',')
             self.dome.secondary_mirror = focus_data[0]
@@ -550,7 +551,7 @@ class command_parser():
 
     def function_j(self, arg):
         try:
-            self.dome.shutter_status = shutter[int(self.dome.shutter_status)]
+            self.dome.shutter_status = shutter[int(arg)]
         except:
             print("error parsing j command")
 

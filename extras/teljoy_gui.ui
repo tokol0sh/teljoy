@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>973</width>
+    <width>1077</width>
     <height>841</height>
    </rect>
   </property>
@@ -466,31 +466,10 @@
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_14">
-      <item row="3" column="1">
-       <widget class="QLabel" name="dome_status">
-        <property name="text">
-         <string>DDD</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_47">
         <property name="text">
          <string>Dome status:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_41">
-        <property name="text">
-         <string>Current dome position:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="current_dome_position">
-        <property name="text">
-         <string>DDD</string>
         </property>
        </widget>
       </item>
@@ -501,13 +480,6 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_50">
-        <property name="text">
-         <string>Shutter status:</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_42">
         <property name="text">
@@ -515,8 +487,22 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="dome__shutter_status">
+      <item row="0" column="1">
+       <widget class="QLabel" name="current_dome_position">
+        <property name="text">
+         <string>DDD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_41">
+        <property name="text">
+         <string>Current dome position:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="dome_status">
         <property name="text">
          <string>DDD</string>
         </property>
@@ -1231,7 +1217,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>973</width>
+     <width>1077</width>
      <height>22</height>
     </rect>
    </property>
